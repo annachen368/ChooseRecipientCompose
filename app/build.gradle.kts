@@ -7,11 +7,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.mytemplate"
+    namespace = "com.example.chooserecientcompose"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.mytemplate"
+        applicationId = "com.example.chooserecientcompose"
         minSdk = 24
         targetSdk = 35
         versionCode = 1

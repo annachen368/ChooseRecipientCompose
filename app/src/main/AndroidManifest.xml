@@ -13,7 +13,7 @@
         android:theme="@style/Theme.MyTemplate"
         tools:targetApi="31">
         <activity
-            android:name="com.example.mytemplate.MainActivity"
+            android:name="com.example.chooserecipientcompose.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.MyTemplate">
             <intent-filter>

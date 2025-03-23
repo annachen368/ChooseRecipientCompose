@@ -1,4 +1,4 @@
-package com.example.mytemplate
+package com.example.chooserecipientcompose
 
 import org.junit.Test
 

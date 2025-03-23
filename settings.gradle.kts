@@ -19,5 +19,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "My Template"
+rootProject.name = "Choose Recipient Compose"
 include(":app")
