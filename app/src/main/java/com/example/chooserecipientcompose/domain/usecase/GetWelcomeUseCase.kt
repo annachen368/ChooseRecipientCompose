@@ -1,6 +1,6 @@
 package com.example.chooserecipientcompose.domain.usecase
 
-import com.example.chooserecipientcompose.data.remote.model.toDomainModel
+import com.example.chooserecipientcompose.data.remote.mapper.toDomainModel
 import com.example.chooserecipientcompose.data.repository.CustomerProfileRepository
 import com.example.chooserecipientcompose.domain.model.CustomerProfile
 import javax.inject.Inject
