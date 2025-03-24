@@ -1,4 +1,4 @@
-package com.example.chooserecipientcompose.ui
+package com.example.chooserecipientcompose.ui.welcome
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel

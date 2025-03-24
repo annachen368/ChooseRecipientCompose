@@ -1,4 +1,4 @@
-package com.example.chooserecipientcompose.ui
+package com.example.chooserecipientcompose.ui.welcome
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material3.Text
