@@ -11,8 +11,14 @@ import javax.inject.Inject
 @HiltViewModel
 class WelcomeViewModel @Inject constructor(private val getWelcomeUseCase: GetWelcomeUseCase) : ViewModel() {
 
-    private var _title = mutableStateOf("")
-    val title = _title
+    sealed class UiState {
+        object Loading : UiState()
+        data class Success(val message: String) : UiState()
+        data class Error(val message: String) : UiState()
+    }
+
+    private val _uiState = mutableStateOf<UiState>(UiState.Loading)
+    val uiState = _uiState
 
     init {
         getWelcome()
@@ -21,11 +27,12 @@ class WelcomeViewModel @Inject constructor(private val getWelcomeUseCase: GetWel
     private fun getWelcome() {
         viewModelScope.launch {
             val customerProfile = getWelcomeUseCase.getCustomerProfile()
-            if (customerProfile.customer.eligibilityProfile.payEligibility == "Y") {
-                _title.value = "Welcome!"
+            val message = if (customerProfile.customer.eligibilityProfile.payEligibility == "Y") {
+                "Welcome!"
             } else {
-                _title.value = "Sorry, you are not eligible to pay"
+                "Sorry, you are not eligible to pay"
             }
+            _uiState.value = UiState.Success(message)
         }
     }
 }
