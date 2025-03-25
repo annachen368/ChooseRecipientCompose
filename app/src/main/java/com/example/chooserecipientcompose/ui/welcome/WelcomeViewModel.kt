@@ -3,13 +3,13 @@ package com.example.chooserecipientcompose.ui.welcome
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.chooserecipientcompose.domain.usecase.GetWelcomeUseCase
+import com.example.chooserecipientcompose.domain.usecase.GetCustomerProfileUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class WelcomeViewModel @Inject constructor(private val getWelcomeUseCase: GetWelcomeUseCase) : ViewModel() {
+class WelcomeViewModel @Inject constructor(private val getCustomerProfileUseCase: GetCustomerProfileUseCase) : ViewModel() {
 
     sealed class UiState {
         object Loading : UiState()
@@ -26,7 +26,7 @@ class WelcomeViewModel @Inject constructor(private val getWelcomeUseCase: GetWel
 
     private fun getWelcome() {
         viewModelScope.launch {
-            val customerProfile = getWelcomeUseCase.getCustomerProfile()
+            val customerProfile = getCustomerProfileUseCase.getCustomerProfile()
             val message = if (customerProfile.customer.eligibilityProfile.payEligibility == "Y") {
                 "Welcome!"
             } else {

@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName
  * network. It's typically a plain Kotlin data class (or Java class) that does not contain any
  * business logic, just fields and sometimes annotations.
  */
-data class CustomerProfileDTO(
+data class CustomerProfileDto(
     val outageFlag: String?,
     val customer: CustomerDto?,
     @SerializedName("recipients") val recipientDto: List<RecipientDto>?

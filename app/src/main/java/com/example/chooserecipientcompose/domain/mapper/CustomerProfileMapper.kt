@@ -1,9 +1,9 @@
-package com.example.chooserecipientcompose.data.remote.mapper
+package com.example.chooserecipientcompose.domain.mapper
 
 import com.example.chooserecipientcompose.data.remote.model.*
 import com.example.chooserecipientcompose.domain.model.*
 
-fun CustomerProfileDTO.toDomainModel(): CustomerProfile {
+fun CustomerProfileDto.toDomainModel(): CustomerProfile {
     return CustomerProfile(
         outageFlag = this.outageFlag ?: "true",
         customer = this.customer?.toDomainModel() ?: Customer(EligibilityProfile("false")),
