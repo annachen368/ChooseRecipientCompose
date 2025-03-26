@@ -6,6 +6,7 @@ import com.example.chooserecipientcompose.data.api.ApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
@@ -21,7 +22,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideContentResolver(context: Context): ContentResolver {
+    fun provideContentResolver(@ApplicationContext context: Context): ContentResolver {
         return context.contentResolver
     }
 }

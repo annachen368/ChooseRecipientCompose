@@ -27,6 +27,7 @@ fun RecipientDto.toDomainModel(): Recipient {
         displayName = this.displayName ?: "",
         token = this.token ?: "",
         tokenType = this.tokenType ?: "",
-        recipientTokenStatus = this.recipientTokenStatus ?: ""
+        recipientTokenStatus = this.recipientTokenStatus ?: "",
+        photoUri = ""
     )
 }

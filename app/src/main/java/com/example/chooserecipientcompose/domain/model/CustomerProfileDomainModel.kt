@@ -15,5 +15,6 @@ data class Recipient(
     val displayName: String,
     val token: String,
     val tokenType: String,
-    val recipientTokenStatus: String
+    val recipientTokenStatus: String,
+    val photoUri: String
 )

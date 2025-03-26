@@ -14,8 +14,7 @@ fun ChooseRecipientScreen(viewModel: ChooseRecipientViewModel = hiltViewModel())
 
         is ChooseRecipientViewModel.UiState.Success -> {
             // Show the list of recipients
-            val customerProfile = uiState.customerProfile
-            val recipients = customerProfile.recipients
+            val recipients = uiState.serverContacts + uiState.deviceContacts
             LazyColumn {
                 items(recipients.size) { index ->
                     val recipient = recipients[index]
