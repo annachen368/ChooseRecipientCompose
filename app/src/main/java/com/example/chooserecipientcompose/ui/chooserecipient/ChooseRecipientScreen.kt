@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.pm.PackageManager
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -12,6 +13,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -69,7 +71,7 @@ fun ChooseRecipientScreen(viewModel: ChooseRecipientViewModel = hiltViewModel())
 
 @Composable
 fun ContactList(contacts: List<Recipient>) {
-    LazyColumn {
+    LazyColumn(modifier = Modifier.fillMaxWidth()) {
         items(contacts.size) { index ->
             val recipient = contacts[index]
             // Display recipient information
