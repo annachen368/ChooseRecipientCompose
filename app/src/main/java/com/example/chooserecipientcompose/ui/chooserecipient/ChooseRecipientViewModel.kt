@@ -30,11 +30,7 @@ class ChooseRecipientViewModel @Inject constructor(
     private val _uiState = mutableStateOf<UiState>(UiState.Loading)
     val uiState = _uiState
 
-    init {
-        getServerRecipientsAndDeviceContacts()
-    }
-
-    private fun getServerRecipientsAndDeviceContacts() {
+    fun getServerRecipientsAndDeviceContacts() {
         viewModelScope.launch {
             try {
                 val customerProfile = getCustomerProfileUseCase.getCustomerProfile()
