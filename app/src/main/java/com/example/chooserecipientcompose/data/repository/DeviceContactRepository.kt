@@ -16,7 +16,7 @@ class DeviceContactRepository @Inject constructor(private val contentResolver: C
             ContactsContract.CommonDataKinds.StructuredName.DISPLAY_NAME,
             ContactsContract.CommonDataKinds.Phone.NUMBER,
             ContactsContract.CommonDataKinds.Email.ADDRESS,
-            ContactsContract.Contacts.PHOTO_URI
+            ContactsContract.Contacts.PHOTO_THUMBNAIL_URI
         )
 
         val selection = "${ContactsContract.Data.MIMETYPE} IN (?, ?, ?)"
