@@ -4,10 +4,12 @@ import android.Manifest
 import android.content.pm.PackageManager
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -61,7 +63,16 @@ fun ChooseRecipientScreen(viewModel: ChooseRecipientViewModel = hiltViewModel())
 
             is ChooseRecipientViewModel.UiState.Success -> {
                 // Show the list of recipients
-                ContactList(uiState.serverContacts + uiState.deviceContacts)
+                Column {
+                    OutlinedTextField(
+                        value = uiState.searchQuery,
+                        onValueChange = { viewModel.onSearchQueryChanged(it) },
+                        label = { Text("Search") },
+                        modifier = Modifier.fillMaxWidth(),
+                        singleLine = true
+                    )
+                    ContactList(uiState.filteredContacts)
+                }
             }
 
             is ChooseRecipientViewModel.UiState.Error -> {

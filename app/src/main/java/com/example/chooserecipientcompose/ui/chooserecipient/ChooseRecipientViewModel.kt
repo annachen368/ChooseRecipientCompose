@@ -21,7 +21,9 @@ class ChooseRecipientViewModel @Inject constructor(
         object Loading : UiState()
         data class Success(
             val serverContacts: List<Recipient>,
-            val deviceContacts: List<Recipient>
+            val deviceContacts: List<Recipient>,
+            val searchQuery: String = "",
+            val filteredContacts: List<Recipient> = serverContacts + deviceContacts
         ) : UiState()
 
         data class Error(val message: String) : UiState()
@@ -44,6 +46,23 @@ class ChooseRecipientViewModel @Inject constructor(
                 Log.e("ChooseRecipientViewModel", "Error fetching customer profile", e)
                 _uiState.value = UiState.Error("Failed to fetch customer profile")
             }
+        }
+    }
+
+    fun onSearchQueryChanged(query: String) {
+        // Handle search query changes
+        // You can filter the list of recipients based on the query here
+        val currentState = _uiState.value
+        if (currentState is UiState.Success) {
+            val filteredContacts = currentState.serverContacts.filter {
+                it.displayName.contains(query, ignoreCase = true)
+            } + currentState.deviceContacts.filter {
+                it.displayName.contains(query, ignoreCase = true)
+            }
+            _uiState.value = currentState.copy(
+                searchQuery = query,
+                filteredContacts = filteredContacts
+            )
         }
     }
 }
