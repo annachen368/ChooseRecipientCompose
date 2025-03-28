@@ -4,9 +4,14 @@ import android.Manifest
 import android.content.pm.PackageManager
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -17,6 +22,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
@@ -25,7 +31,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.chooserecipientcompose.domain.model.Recipient
 
 @Composable
-fun ChooseRecipientScreen(viewModel: ChooseRecipientViewModel = hiltViewModel()) {
+fun ChooseRecipientScreen(
+    viewModel: ChooseRecipientViewModel = hiltViewModel(),
+    innerPadding: PaddingValues
+) {
     val context = LocalContext.current
     var hasPermission by remember {
         mutableStateOf(
@@ -59,11 +68,24 @@ fun ChooseRecipientScreen(viewModel: ChooseRecipientViewModel = hiltViewModel())
         when (val uiState = viewModel.uiState.value) {
             is ChooseRecipientViewModel.UiState.Loading -> {
                 // Show loading indicator
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(innerPadding),
+                    contentAlignment = Alignment.Center
+                ) {
+                    CircularProgressIndicator()
+                }
             }
 
             is ChooseRecipientViewModel.UiState.Success -> {
                 // Show the list of recipients
-                Column {
+                Column(
+                    modifier = Modifier
+                        .padding(innerPadding)
+                        .fillMaxSize(),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
                     OutlinedTextField(
                         value = uiState.searchQuery,
                         onValueChange = { viewModel.onSearchQueryChanged(it) },
@@ -77,10 +99,34 @@ fun ChooseRecipientScreen(viewModel: ChooseRecipientViewModel = hiltViewModel())
 
             is ChooseRecipientViewModel.UiState.Error -> {
                 // Show error message
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(innerPadding),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = uiState.message,
+                        color = MaterialTheme.colorScheme.error,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
             }
         }
     } else {
         // Show a loading state, permission explanation, or fallback UI
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(
+                text = "Permission to access contacts is required.",
+                color = MaterialTheme.colorScheme.error,
+                modifier = Modifier.fillMaxWidth()
+            )
+        }
     }
 }
 

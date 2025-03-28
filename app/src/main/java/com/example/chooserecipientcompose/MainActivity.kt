@@ -41,7 +41,7 @@ class MainActivity : ComponentActivity() {
                         composable("choose_recipient") {
                             // Handle navigation to Choose Recipient screen
                             // Use Jetpack Navigation component
-                            ChooseRecipientScreen()
+                            ChooseRecipientScreen(innerPadding = innerPadding)
                         }
                     }
                 }
