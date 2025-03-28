@@ -45,14 +45,15 @@ fun ChooseRecipientScreen(viewModel: ChooseRecipientViewModel = hiltViewModel())
         }
     }
 
-    LaunchedEffect(Unit) {
-        if (!hasPermission) {
+    LaunchedEffect(hasPermission) {
+        if (hasPermission) {
+            viewModel.getServerRecipientsAndDeviceContacts()
+        } else {
             permissionLauncher.launch(Manifest.permission.READ_CONTACTS)
         }
     }
 
     if (hasPermission) {
-        viewModel.getServerRecipientsAndDeviceContacts()
         when (val uiState = viewModel.uiState.value) {
             is ChooseRecipientViewModel.UiState.Loading -> {
                 // Show loading indicator
