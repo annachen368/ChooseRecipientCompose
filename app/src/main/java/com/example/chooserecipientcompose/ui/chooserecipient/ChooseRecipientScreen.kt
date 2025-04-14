@@ -25,15 +25,17 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.chooserecipientcompose.domain.model.Recipient
 
 @Composable
 fun ChooseRecipientScreen(
-    viewModel: ChooseRecipientViewModel = hiltViewModel(),
-    innerPadding: PaddingValues
+    uiState: ChooseRecipientViewModel.UiState,
+    innerPadding: PaddingValues,
+    loadContacts: () -> Unit = {},
+    onSearchQueryChanged: (String) -> Unit = {},
 ) {
     val context = LocalContext.current
     var hasPermission by remember {
@@ -58,14 +60,14 @@ fun ChooseRecipientScreen(
 
     LaunchedEffect(hasPermission) {
         if (hasPermission) {
-            viewModel.getServerRecipientsAndDeviceContacts()
+            loadContacts()
         } else {
             permissionLauncher.launch(Manifest.permission.READ_CONTACTS)
         }
     }
 
     if (hasPermission) {
-        when (val uiState = viewModel.uiState.value) {
+        when (uiState) {
             is ChooseRecipientViewModel.UiState.Loading -> {
                 // Show loading indicator
                 Box(
@@ -88,7 +90,7 @@ fun ChooseRecipientScreen(
                 ) {
                     OutlinedTextField(
                         value = uiState.searchQuery,
-                        onValueChange = { viewModel.onSearchQueryChanged(it) },
+                        onValueChange = { onSearchQueryChanged(it) },
                         label = { Text("Search") },
                         modifier = Modifier.fillMaxWidth(),
                         singleLine = true
@@ -150,4 +152,48 @@ fun ContactList(contacts: List<Recipient>) {
             }
         }
     }
+}
+
+@Preview
+@Composable
+private fun ChooseRecipientScreenPreview() {
+    val uiState = ChooseRecipientViewModel.UiState.Success(
+        serverContacts = listOf(
+            Recipient(
+                recipientId = "1",
+                displayName = "John Doe",
+                token = "token1",
+                tokenType = "type1",
+                recipientTokenStatus = "active",
+                photoUri = "123"
+            ),
+            Recipient(
+                recipientId = "2",
+                displayName = "Jane Smith",
+                token = "token2",
+                tokenType = "type2",
+                recipientTokenStatus = "inactive",
+                photoUri = "123"
+            )
+        ),
+        deviceContacts = listOf(
+            Recipient(
+                recipientId = "3",
+                displayName = "Alice Johnson",
+                token = "token3",
+                tokenType = "type3",
+                recipientTokenStatus = "active",
+                photoUri = "123"
+            ),
+            Recipient(
+                recipientId = "4",
+                displayName = "Bob Brown",
+                token = "token4",
+                tokenType = "type4",
+                recipientTokenStatus = "inactive",
+                photoUri = "123"
+            )
+        )
+    )
+    ChooseRecipientScreen(uiState, PaddingValues(16.dp))
 }

@@ -12,6 +12,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.chooserecipientcompose.ui.chooserecipient.ChooseRecipientScreen
+import com.example.chooserecipientcompose.ui.chooserecipient.ChooseRecipientViewModel
 import com.example.chooserecipientcompose.ui.theme.MyTemplateTheme
 import com.example.chooserecipientcompose.ui.welcome.WelcomeScreen
 import com.example.chooserecipientcompose.ui.welcome.WelcomeViewModel
@@ -46,7 +47,18 @@ class MainActivity : ComponentActivity() {
                         composable("choose_recipient") {
                             // Handle navigation to Choose Recipient screen
                             // Use Jetpack Navigation component
-                            ChooseRecipientScreen(innerPadding = innerPadding)
+                            val viewModel = hiltViewModel<ChooseRecipientViewModel>()
+                            val uiState = viewModel.uiState
+                            ChooseRecipientScreen(
+                                innerPadding = innerPadding,
+                                uiState = uiState,
+                                loadContacts = {
+                                    viewModel.loadContacts()
+                                },
+                                onSearchQueryChanged = { query ->
+                                    viewModel.onSearchQueryChanged(query)
+                                }
+                            )
                         }
                     }
                 }

@@ -1,6 +1,7 @@
 package com.example.chooserecipientcompose.ui.chooserecipient
 
 import android.util.Log
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -30,9 +31,9 @@ class ChooseRecipientViewModel @Inject constructor(
     }
 
     private val _uiState = mutableStateOf<UiState>(UiState.Loading)
-    val uiState = _uiState
+    val uiState by _uiState
 
-    fun getServerRecipientsAndDeviceContacts() {
+    fun loadContacts() {
         viewModelScope.launch {
             try {
                 val customerProfile = getCustomerProfileUseCase.getCustomerProfile()
