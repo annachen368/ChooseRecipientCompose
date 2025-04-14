@@ -10,12 +10,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import com.example.chooserecipientcompose.ui.theme.MyTemplateTheme
 
 @Composable
 fun WelcomeScreen(
     innerPadding: PaddingValues,
-    viewModel: WelcomeViewModel = hiltViewModel(),
+    state: WelcomeViewModel.UiState,
     navigateToChooseRecipient: () -> Unit
 ) {
     Box(
@@ -23,7 +25,7 @@ fun WelcomeScreen(
             .fillMaxSize()
             .padding(innerPadding), contentAlignment = Alignment.Center
     ) {
-        when (val state = viewModel.uiState.value) {
+        when (state) {
             is WelcomeViewModel.UiState.Loading -> {
                 // Show loading indicator
                 CircularProgressIndicator()
@@ -42,5 +44,19 @@ fun WelcomeScreen(
                 Text(text = state.message, color = androidx.compose.ui.graphics.Color.Red)
             }
         }
+    }
+}
+
+
+// Type @prev auto generate
+@Preview
+@Composable
+private fun WelcomeScreenPreview() {
+    MyTemplateTheme {
+        WelcomeScreen(
+            innerPadding = PaddingValues(0.dp),
+            state = WelcomeViewModel.UiState.Success("Welcome to the app!"),
+            navigateToChooseRecipient = {}
+        )
     }
 }

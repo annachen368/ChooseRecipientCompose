@@ -1,5 +1,6 @@
 package com.example.chooserecipientcompose.ui.welcome
 
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -18,7 +19,7 @@ class WelcomeViewModel @Inject constructor(private val getCustomerProfileUseCase
     }
 
     private val _uiState = mutableStateOf<UiState>(UiState.Loading)
-    val uiState = _uiState
+    val uiState by _uiState
 
     init {
         getWelcome()
